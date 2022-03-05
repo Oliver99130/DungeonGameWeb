@@ -1,14 +1,4 @@
 
-@font-face {
-    font-family: 'manaspaceregular';
-    src: url('manaspc-webfont.woff2') format('woff2'),
-         url('manaspc-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
 body {
     background-color: #333333;
     color: #FFFFFF;
@@ -29,14 +19,6 @@ h3 {
     font-size: 1.3rem;
 }
 
-.tm-site-logo {
-    width: 40px;
-    height: 40px;
-    border: 7px solid white;
-    transform: rotate(45deg);
-    display: inline-block;
-    vertical-align: middle;
-}
 
 .tm-site-title {
     display: inline-block;
