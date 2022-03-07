@@ -1,6 +1,6 @@
 <?php
 
-    $con=mysqli_connect('192.168.31.20:8080','root','','demo');
+    $con=mysqli_connect('localhost','root','','demo');
 
     if (mysqli_connect_errno())
     {
