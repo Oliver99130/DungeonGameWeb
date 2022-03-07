@@ -116,24 +116,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <br>
                     <h1 class="pl-4 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
                     <div class="tm-welcome-text">
-        <h2>Login</h2>
-        <p>Please fill in your credentials to login.</p>
-
+        <h2>Bejelentkezés</h2>
+        <br>
         <?php 
         if(!empty($login_err)){
             echo '<div class="alert alert-danger">' . $login_err . '</div>';
         }        
         ?>
-
+        
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <label>Felhasználónév</label>
+                <div class="row">
+                    <div class="col-lg-5 mx-auto">
+                        <input  type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                    </div>
+                </div>
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>    
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                <label>Jelszó</label>
+                <div class="row">
+                    <div class="col-lg-5 mx-auto">
+                        <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                    </div>
+                </div>
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
             </div>
             <div class="form-group">
@@ -141,7 +148,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         </form>
     </div>
-                    <p class=" tm-welcome-text">A játék letötéséhez regisztrálj:<a href="register.php">Itt!</a>
+                    <p class=" tm-welcome-text">A játék letötéséhez kérlek regisztrálj: <a href="register.php">Itt!</a>
                 </header>
             </div>
         </div>

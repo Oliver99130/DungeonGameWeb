@@ -29,7 +29,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 </head>
 <body>
-    <h1 class="my-5">Üdözőllek, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b> Dungeonban.</h1>
+    <h1 class="my-5">Üdözöllek  <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>a Dungeonban.</h1>
     </div>
                     
                     <button> <a href="img/heal.png" download="proposed_file_name">Letöltés</a> </button>
