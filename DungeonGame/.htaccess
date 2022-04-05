@@ -1,0 +1,9 @@
+
+# HTID:19426409: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:19426409:
+Allow from All
+
+ErrorDocument 403 https://infinityfree.net/errors/403/
+ErrorDocument 404 https://infinityfree.net/errors/404/
+ErrorDocument 500 https://infinityfree.net/errors/500/

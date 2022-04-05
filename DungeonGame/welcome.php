@@ -19,27 +19,89 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     <title>DungeonGame</title>
 
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <link rel="stylesheet" href="css/templatemo-style.css"> 
-    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" charset="utf-8" />
 
 </head>
 <body>
-    <h1 class="my-5">Üdözöllek  <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>a Dungeonban.</h1>
+<div class="row">
+    <div class="col-lg-12">
+        <header class="text-center tm-site-header">
+            <img src="img/dungeon.png" alt="Image" class="rounded-circle tm-img-timeline">
+            <br>
+            <h1 class="pl-2 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
     </div>
-                    
-                    <button> <a href="img/heal.png" download="proposed_file_name">Letöltés</a> </button>
-                    <p>
-        <a href="reset-password.php" class="btn btn-warning">új jelszó</a>
-        <a href="logout.php" class="btn btn-danger ml-3">Kijelentkezés</a>
-    </p>
+</div>
+    <h1 class="my-5 text-center tm-site-header">Üdvözöllek  <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b> a Dungeonban.</h1>
+    </div>
                 </header>
             </div>
         </div>
+        <?php
+                require_once "config.php";
+
+                $test1=$_SESSION['username'];
+                $result2 = mysqli_query($link,"SELECT users.username AS username,
+                playerdata.Health AS health,
+                playerdata.PlayedTime AS PlayedTime,
+                playerdata.Pesos AS pesos,
+                playerdata.Experience AS experience,
+                playerdata.skinID AS skin,
+                playerdata.killedEnemy AS killedEnemys,
+                playerdata.deaths AS deaths
+                FROM users JOIN playerdata ON users.ID=playerdata.ID WHERE users.username='".$_SESSION['username']."';");
+                
+                while($test = mysqli_fetch_array($result2)){
+
+                $health= $test['health'];
+                
+                $experience= $test['experience'];
+
+                $playedtime= $test['PlayedTime'];
+
+                $pesos= $test['pesos'];
+
+                $skinid= $test['skin'];
+
+                $killedenemys= $test['killedEnemys'];
+
+                $deaths= $test['deaths'];
+                };
+                $playedtime = (float) str_replace(',', '.', $playedtime);
+                $playedtime=gmdate('H:i:s', $playedtime);
+                echo "<div class='container'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <img src='img/".$skinid."player.gif' alt='Image'>
+                            </div>
+                            <div class='col-sm-4'>
+                                <h2>Karaktered statisztikái:</h2>
+                                <ul>
+                                <li><span>Elért tapasztalati pont:</span> ".$experience."</li>
+                                <li><span>Megölt szörnyek:</span> ".$killedenemys."</li>
+                                <li><span>Halálaid száma:</span> ".$deaths."</li>
+                                <li><span>Jelenlegi aranyad:</span> ".$pesos."</li>
+                                <li><span>Jelenlegi életerőd:</span> ".$health."</li>
+                                <li><span>Játszott óráid száma:</span> ".$playedtime."</li>
+                                </ul>
+                            </div>
+                            <div class='col-sm-4'>
+                                <h2>Felhasználói opciók:</h2>
+                                <div class='buttons'> 
+                                    <a href='' class='btn btn-success btn-lg'></i> Letöltés<br> <small>Androidra, verzió 1.0</small></a>
+                                    <a href='Installer/DungeonSetup.zip' class='btn btn-success btn-lg'></i> Letöltés<br> <small>Pc-re, verzió 1.0</small></a>
+                                </div>
+                                <br>
+                                <p>
+                                    <a href='reset-password.php' class='btn btn-warning ml-3'>új jelszó</a><br><br>
+                                    <a href='logout.php' class='btn btn-danger ml-3'>Kijelentkezés</a>
+                                </p>
+                            </div>
+                    </div>";
+            ?>
     <div class="container tm-container-2">
             <div class="row">
                 <div class="col-lg-12">
@@ -148,25 +210,60 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             </div>
             <!--  row -->
             <hr>
-            <div class="row tm-section-mb tm-section-mt">
-                <div class="col-lg-4 col-md-4 col-sm-12 pr-lg-5 mb-md-0 mb-4">
-                    <h3 class="mt-2 mb-3 tm-text-gray">Nunc dictum consequat</h3>
-                    <p>Integer imperdiet aliquet lobortis. In in metus risus. Pellentesque pulvinar venenatis dui id rutrum. In
-                    pharetra neque et eleifend venenatis.</p>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 pr-lg-5 mb-md-0 mb-4">
-                    <h3 class="mt-2 mb-3 tm-text-gray">Morbi ultrices tellus</h3>
-                    <p>Integer imperdiet aliquet lobortis. In in metus risus. Pellentesque pulvinar venenatis dui id rutrum. In
-                    pharetra neque et eleifend venenatis.</p>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <h3 class="mt-2 mb-3 tm-text-gray">Suspendisse dolor tortor</h3>
-                    <p>Integer imperdiet aliquet lobortis. In in metus risus. Pellentesque pulvinar venenatis dui id rutrum. In
-                    pharetra neque et eleifend venenatis.</p>
-                </div>
+            <h2 class="row justify-content-center">Az 5 legtapasztaltabb játékos a Dungeon-ben</h2>
+            <div class="row justify-content-center">
+                
+                <header class="text-center tm-site-header">
+                    
+            <?php
+
+                
+
+                $result1 = mysqli_query($link,"SELECT users.username AS username,
+                playerdata.PlayedTime AS PlayedTime,
+                playerdata.Experience AS experience 
+                FROM users JOIN playerdata ON users.ID=playerdata.ID WHERE playerdata.PlayedTime!=0 ORDER BY experience  DESC LIMIT 5;");
+
+                echo "<table class='table table-responsive' border='1'>
+
+                <tr>
+
+                <th>Felhasználónév</th>
+
+                <th>Játszott órák száma</th>
+
+                <th>Megszerzett tapasztalat</th>
+
+                </tr>";
+
+                while($row = mysqli_fetch_array($result1))
+
+                {
+                $playedtime=$row['PlayedTime'];
+                $playedtime = (float) str_replace(',', '.', $playedtime);
+                $playedtime=gmdate('H:i:s', $playedtime);
+
+                echo "<tr>";
+
+                echo "<td>" . $row['username'] . "</td>";
+
+                echo "<td>" . $playedtime . "</td>";
+
+                echo "<td>" . $row['experience'] . "</td>";
+
+                echo "</tr>";
+
+                }
+
+                echo "</table>";
+                mysqli_close($link);
+
+            ?>
+            </div>
+            </div>
             </div>
         <hr>
-        <!-- Footer -->
+
         <footer class="row mt-5 mb-5">
             <div class="col-lg-12">
                 <p class="text-center tm-text-gray tm-copyright-text mb-0">Copyright &copy; 2022 Békefi Balázs, Szűcs Olivér, Mohácsi Erik</p>

@@ -121,11 +121,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <header class="text-center tm-site-header">
             <img src="img/dungeon.png" alt="Image" class="rounded-circle tm-img-timeline">
             <br>
-            <h1 class="pl-4 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
+            <h1 class="pl-2 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
     </div>
 </div>
     <div class="pl-4 tm-site-title">
-        <h2>Bejelentkezés</h2>
+        <h2>Regisztráció</h2>
         <p>Töltsd ki az adatokat</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">

@@ -1,8 +1,17 @@
-@font-face {
-    font-family: 'manaspaceregular';
-    src: url('manaspc-webfont.woff2') format('woff2'),
-         url('manaspc-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+.playerStats {
+  margin: auto;
+  padding: 0;
+  list-style: none;
+  margin: 6px;
+}
+.playerStats li {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+}
+.playerStats li span {
+  display: inline-block;
+  width: 60%;
+  color: #999;
 }

@@ -3,8 +3,8 @@
 session_start();
  
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === true){
+    header("location: index.php");
     exit;
 }
  
@@ -29,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
    
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = $_POST["confirm_password"];
+        $confirm_password_err = "Kérlek írd be a jelszót ismét.";
         echo $_POST["confirm_password"];
     } else{
         $confirm_password = trim($_POST["confirm_password"]);
@@ -41,15 +41,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     if(empty($new_password_err) && empty($confirm_password_err)){
 
-        $sql = "UPDATE users SET password = ? salt = ? WHERE id = ?";
+        $sql = "UPDATE users SET password = ?, salt = ? WHERE id = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
    
-            mysqli_stmt_bind_param($stmt, "sis", $param_password, $param_id,$salt);
-            
+            mysqli_stmt_bind_param($stmt, "ssi", $param_password, $salt, $param_id);
+            $username=$_SESSION["username"];
  
             $salt="\$5\$rounds=5000\$" . "lockedpass" . $username . "\$";
-            $param_password = crypt($password, $salt); 
+            $param_password = crypt($new_password, $salt); 
             $param_id = $_SESSION["id"];
             
    
@@ -72,35 +72,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
  
-<!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Reset Password</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Regisztráció</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/templatemo-style.css"> 
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" charset="utf-8" />
     <style>
-        body{ font: 14px sans-serif; }
+        body{ font: 14px sans-serif;text-align: center; }
         .wrapper{ width: 360px; padding: 20px; }
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <h2>Reset Password</h2>
-        <p>Please fill out this form to reset your password.</p>
+<div class="row">
+    <div class="col-lg-12">
+        <header class="text-center tm-site-header">
+            <img src="img/dungeon.png" alt="Image" class="rounded-circle tm-img-timeline">
+            <br>
+            <h1 class="pl-2 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
+    </div>
+</div>
+    <div class="pl-4 tm-site-title">
+        <h2>Új jelszó</h2>
+        <p>Töltsd ki hogy új jelszót állíthass be magadnak!</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
             <div class="form-group">
-                <label>New Password</label>
+                <label>Új jelszó</label>
                 <input type="password" name="new_password" class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>">
                 <span class="invalid-feedback"><?php echo $new_password_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Confirm Password</label>
+                <label>Jelszó megerősítése</label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link ml-2" href="welcome.php">Cancel</a>
+                <input type="submit" class="btn btn-primary" value="Új jelszó">
+                <a class="btn btn-link ml-2" href="welcome.php">Vissza</a>
             </div>
         </form>
     </div>    

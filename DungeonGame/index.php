@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
 
-                            session_start();
+
                             
 
                             $_SESSION["loggedin"] = true;
@@ -99,7 +99,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <link rel="stylesheet" href="css/templatemo-style.css"> 
-    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" charset="utf-8" />
+
 </head>
 
 <body>
@@ -109,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <header class="text-center tm-site-header">
                     <img src="img/dungeon.png" alt="Image" class="rounded-circle tm-img-timeline">
                     <br>
-                    <h1 class="pl-4 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
+                    <h1 class="pl-2 tm-site-title" style="font-family:'manaspaceregular'">DungeonGame</h1>
                         <div class="tm-welcome-text">
                             <h2>Bejelentkezés</h2>
                             <br>
@@ -139,7 +139,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 
                         </div>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-primary" value="Login">
+                                <input type="submit" class="btn btn-primary" value="Bejelentkezés">
                             </div>
                             </form>
                         </div>
@@ -253,63 +253,57 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
             </div>
             <hr>
+            <h2 class="row justify-content-center">Az 5 legtapasztaltabb játékos a Dungeon-ben</h2>
             <div class="row justify-content-center">
-            <div class="col-auto">
+            
+                
                 <header class="text-center tm-site-header">
+                <div class="table-responsive">
             <?php
 
-                $con = mysqli_connect("localhost","root","","demo");
+                
 
-                if (!$con)
-
-                {
-
-                die('Could not connect: ' . mysqli_connect_error());
-
-                }
-
-                $result = mysqli_query($con,"SELECT users.username AS username,
-                playerdata.Health AS health,
+                $result1 = mysqli_query($link,"SELECT users.username AS username,
                 playerdata.PlayedTime AS PlayedTime,
-                playerdata.Pesos AS pesos 
-                FROM users JOIN playerdata ON users.ID=playerdata.ID WHERE playerdata.PlayedTime!=0");
+                playerdata.Experience AS experience 
+                FROM users JOIN playerdata ON users.ID=playerdata.ID WHERE playerdata.PlayedTime!=0 ORDER BY experience  DESC LIMIT 5;");
 
-                echo "<table class='table table-responsive' border='1'>
+                echo "<table class='table' border='1'>
 
                 <tr>
 
-                <th>username</th>
+                <th>Felhasználónév</th>
 
-                <th>Health</th>
+                <th>Játszott órák száma</th>
 
-                <th>PlayedTime</th>
-
-                <th>Pesos</th>
+                <th>Megszerzett tapasztalat</th>
 
                 </tr>";
 
-                while($row = mysqli_fetch_array($result))
+                while($row = mysqli_fetch_array($result1))
 
                 {
+                $playedtime=$row['PlayedTime'];
+                $playedtime = (float) str_replace(',', '.', $playedtime);
+                $playedtime=gmdate('H:i:s', $playedtime);
 
                 echo "<tr>";
 
                 echo "<td>" . $row['username'] . "</td>";
 
-                echo "<td>" . $row['health'] . "</td>";
+                echo "<td>" . $playedtime . "</td>";
 
-                echo "<td>" . $row['PlayedTime'],' másodperc' . "</td>";
-
-                echo "<td>" . $row['pesos'] . "</td>";
+                echo "<td>" . $row['experience'] . "</td>";
 
                 echo "</tr>";
 
                 }
 
                 echo "</table>";
-                mysqli_close($con);
+                mysqli_close($link);
 
             ?>
+            </div>
             </div>
             </div>
             </div>

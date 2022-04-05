@@ -1,12 +1,6 @@
 <?php
 
-    $con=mysqli_connect('localhost','root','','demo');
-
-    if (mysqli_connect_errno())
-    {
-        echo "0: Connection failed";
-        exit();
-    }
+    require_once "config.php";
 
     $id=$_POST["id"];
     $health=$_POST["health"];
@@ -17,7 +11,9 @@
     $lastScene=$_POST["lastscene"];
     $gameQuality=$_POST["gamequality"];
     $musicVolume=$_POST["musicvolume"];
-    echo gettype($lastScene),$lastScene;
+    $skinID=$_POST["skinid"];
+    $killedEnemyes=$_POST["killedenemyes"];
+    $playerDeaths=$_POST["playerdeaths"];
     $sql="UPDATE `playerdata` SET 
     `Health` = '$health', 
     `Pesos` = '$pesos',
@@ -26,12 +22,15 @@
     `PlayedTime` = '$playedTime',
     `LastScene` = '$lastScene',
     `GameQuality` = '$gameQuality',
-    `MusicVolume` = '$musicVolume'
+    `MusicVolume` = '$musicVolume',
+    `skinID` = '$skinID',
+    `killedEnemy` = '$killedEnemyes',
+    `deaths` = '$playerDeaths'
      WHERE ID = $id";
 
-    if ($con->query($sql) === TRUE) {
-        echo "Record updated successfully";
+    if ($link->query($sql) === TRUE) {
+        echo "0";
       } else {
-        echo "Error updating record: " . $con->error;
+        echo "Error updating record: " . $link->error;
       }
 ?>

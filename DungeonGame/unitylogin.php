@@ -1,21 +1,15 @@
 <?php
 
-    $con=mysqli_connect('localhost','root','','demo');
-
-    if (mysqli_connect_errno())
-    {
-        echo "1: Connection failed";
-        exit();
-    }
+    require_once "config.php";
 
     $username=$_POST["name"];
     $password=$_POST["password1"];
 
     $namecheckquery="SELECT id,username, password,salt FROM users WHERE username='".$username."';";
 
-    $namecheck=mysqli_query($con,$namecheckquery) or die("2: Name check failed");
+    $namecheck=mysqli_query($link,$namecheckquery) or die("2: Name check failed");
     if(mysqli_num_rows($namecheck)!=1){
-        echo "5: Either no user with this name.";
+        echo "5: Nem létezik ilyen felhasználó!";
         exit();
     }
 
@@ -26,7 +20,7 @@
 
     $loginhash = crypt($password,$salt);
     if($hash!=$loginhash){
-        echo "6: Incorrect password!";
+        echo "6: Hibás jelszó!";
         exit();
     }
 
