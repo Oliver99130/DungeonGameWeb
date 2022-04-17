@@ -26,7 +26,7 @@
     `skinID` = '$skinID',
     `killedEnemy` = '$killedEnemyes',
     `deaths` = '$playerDeaths'
-     WHERE ID = $id";
+     WHERE UserId = $id";
 
     if ($link->query($sql) === TRUE) {
         echo "0";

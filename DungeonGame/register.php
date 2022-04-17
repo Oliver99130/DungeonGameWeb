@@ -91,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-    $sql = "INSERT INTO playerdata(ID) SELECT MAX(ID) FROM users";
+    $sql = "INSERT INTO playerdata(UserId) SELECT MAX(ID) FROM users";
     $result=mysqli_query($link,$sql);
 
     mysqli_close($link);
@@ -103,6 +103,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <title>Regisztráció</title>
+    
+    <link rel="icon" type="image/x-icon" href="img/dungeon.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 

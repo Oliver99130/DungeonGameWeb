@@ -3,7 +3,7 @@
 session_start();
  
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === true){
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false){
     header("location: index.php");
     exit;
 }
@@ -76,7 +76,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Regisztráció</title>
+    <title>Új jelszó</title>
+    
+    <link rel="icon" type="image/x-icon" href="img/dungeon.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 

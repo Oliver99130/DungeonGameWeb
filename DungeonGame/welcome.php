@@ -18,6 +18,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>DungeonGame</title>
+    
+    <link rel="icon" type="image/x-icon" href="img/dungeon.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 
@@ -52,7 +54,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 playerdata.skinID AS skin,
                 playerdata.killedEnemy AS killedEnemys,
                 playerdata.deaths AS deaths
-                FROM users JOIN playerdata ON users.ID=playerdata.ID WHERE users.username='".$_SESSION['username']."';");
+                FROM users JOIN playerdata ON users.ID=playerdata.UserId WHERE users.username='".$_SESSION['username']."';");
                 
                 while($test = mysqli_fetch_array($result2)){
 
@@ -91,7 +93,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <div class='col-sm-4'>
                                 <h2>Felhasználói opciók:</h2>
                                 <div class='buttons'> 
-                                    <a href='' class='btn btn-success btn-lg'></i> Letöltés<br> <small>Androidra, verzió 1.0</small></a>
+                                    <a href='Installer/DungeonGameApp.zip' class='btn btn-success btn-lg'></i> Letöltés<br> <small>Androidra, verzió 1.0</small></a>
                                     <a href='Installer/DungeonSetup.zip' class='btn btn-success btn-lg'></i> Letöltés<br> <small>Pc-re, verzió 1.0</small></a>
                                 </div>
                                 <br>
@@ -105,7 +107,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="container tm-container-2">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="tm-welcome-text">DungeonGame gyors talpaló:</h2>
+                    <h2 class="tm-welcome-text">DungeonGame gyorstalpaló:</h2>
                 </div>
             </div>
             <div class="row tm-section-mb">
@@ -216,13 +218,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <header class="text-center tm-site-header">
                     
             <?php
-
                 
-
                 $result1 = mysqli_query($link,"SELECT users.username AS username,
                 playerdata.PlayedTime AS PlayedTime,
                 playerdata.Experience AS experience 
-                FROM users JOIN playerdata ON users.ID=playerdata.ID WHERE playerdata.PlayedTime!=0 ORDER BY experience  DESC LIMIT 5;");
+                FROM users JOIN playerdata ON users.ID=playerdata.UserId WHERE playerdata.PlayedTime!=0 ORDER BY experience  DESC LIMIT 5;");
 
                 echo "<table class='table table-responsive' border='1'>
 
@@ -237,7 +237,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </tr>";
 
                 while($row = mysqli_fetch_array($result1))
-
                 {
                 $playedtime=$row['PlayedTime'];
                 $playedtime = (float) str_replace(',', '.', $playedtime);
@@ -266,6 +265,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         <footer class="row mt-5 mb-5">
             <div class="col-lg-12">
+                <p class="text-center tm-text-gray mb-0">Elérhetőség: balazs.bekefi@simonyiszki.org</p>
                 <p class="text-center tm-text-gray tm-copyright-text mb-0">Copyright &copy; 2022 Békefi Balázs, Szűcs Olivér, Mohácsi Erik</p>
             </div>
         </footer>
